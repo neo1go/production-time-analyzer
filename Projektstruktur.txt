@@ -1,0 +1,49 @@
+
+ProductionTimeAnalyzer/
+│
+├── Controllers/
+│   ├── HomeController.cs
+│   ├── ProductionController.cs
+│   ├── ApiController.cs
+│
+├── Models/
+│   ├── Product.cs
+│   ├── Machine.cs
+│   ├── TimeEntry.cs
+│
+├── ViewModels/
+│   ├── ProductionOverviewViewModel.cs
+│   ├── TimeEntryDto.cs
+│
+├── Services/
+│   ├── Interfaces/
+│   │   ├── ITimeAnalysisService.cs
+│   │   ├── IAgentService.cs
+│   │
+│   ├── TimeAnalysisService.cs
+│   ├── AgentService.cs
+│
+├── Data/
+│   ├── AppDbContext.cs
+│   ├── SeedData.cs
+│
+├── Views/
+│   ├── Home/
+│   │   └── Index.cshtml
+│   │
+│   ├── Production/
+│   │   ├── Overview.cshtml
+│   │   ├── Detail.cshtml
+│   │
+│   ├── Shared/
+│       └── _Layout.cshtml
+│
+├── wwwroot/
+│   ├── js/
+│   │   ├── production.js
+│   │   ├── chart.js
+│   │
+│   ├── css/
+│
+├── Program.cs
+├── appsettings.json
