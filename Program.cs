@@ -41,6 +41,15 @@ namespace ProductionTimeAnalyzer
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
+
+            // Datenbank initialisieren, CreateScpoe erstellt AppDbContext neu und dann wird es durch 
+            // using auch direkt wieder disposed.
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                SeedData.Initialize(db);
+            }
+
             app.Run();
         }
     }
