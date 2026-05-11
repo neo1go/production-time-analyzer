@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ProductionTimeAnalyzer.Data;
+using ProductionTimeAnalyzer.Services;
 using System.Net.NetworkInformation;
 
 namespace ProductionTimeAnalyzer
@@ -19,6 +20,8 @@ namespace ProductionTimeAnalyzer
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<TimeAnalysisService>();
+
 
             var app = builder.Build();
 

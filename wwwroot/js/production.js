@@ -1,20 +1,24 @@
 ﻿
-
-let chartInstance = null; //chart.js Reset
-
+//chart.js Resets
+let chartInstance = null;
+let analysisChart = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     loadMachines();
     loadTimeEntries();
+    loadAnalysis();
 
     document.getElementById("filterForm")
         .addEventListener("submit", e => {
             e.preventDefault();
             loadTimeEntries();
+            loadAnalysis();
         });
+
 });
 
 function statusToText(status) {
+
     switch (status) {
         case 0: return "Setup";
         case 1: return "Production";
@@ -23,7 +27,10 @@ function statusToText(status) {
     }
 }
 
+
+
 async function loadTimeEntries() {
+
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
     const machineId = document.getElementById("machineSelect").value;
@@ -51,12 +58,15 @@ async function loadTimeEntries() {
         `;
 
         tbody.appendChild(row);
-        renderChart(data);
+        
     });
+    renderChart(data);
 }
 
 
+
 async function loadMachines() {
+
     const response = await fetch("/api/machines");
     const machines = await response.json();
 
@@ -137,6 +147,71 @@ function renderChart(entries) {
             responsive: true,
             plugins: {
                 legend: { display: false }
+            }
+        }
+    });
+}
+
+// Laden der Analyse Daten
+async function loadAnalysis() {
+
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const machineId = document.getElementById("machineSelect").value;
+
+    const params = new URLSearchParams();
+
+    if (startDate) params.append("startDate", startDate);
+    if (endDate) params.append("endDate", endDate);
+    if (machineId) params.append("machineId", machineId);
+
+    const response = await fetch(`/api/analysis?${params.toString()}`);
+    const analysis = await response.json();
+
+    renderAnalysisChart(analysis);
+}
+
+
+
+//Darstellen der Analyse Daten
+function renderAnalysisChart(a) {
+
+    document.getElementById("prodMinutes").innerText = a.productionMinutes;
+    document.getElementById("downMinutes").innerText = a.downtimeMinutes;
+    document.getElementById("downPercent").innerText =
+        a.downtimePercentage.toFixed(1) + " %";
+
+    const canvas = document.getElementById("analysisChart");
+    const ctx = canvas.getContext("2d");
+
+    const data = {
+        labels: ["Time"],
+        datasets: [
+            {
+                label: "Production",
+                data: [a.productionMinutes],
+                backgroundColor: "#198754"
+            },
+            {
+                label: "Downtime",
+                data: [a.downtimeMinutes],
+                backgroundColor: "#dc3545"
+            }
+        ]
+    };
+
+    if (analysisChart) {
+        analysisChart.destroy();
+    }
+
+    analysisChart = new Chart(ctx, {
+        type: "bar",
+        data,
+        options: {
+            responsive: true,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
             }
         }
     });
