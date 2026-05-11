@@ -15,7 +15,16 @@
         <input type="date" id="endDate" />
     </label>
 
+    
+
+    <label>
+    Machine:
+    <select id="machineSelect">
+        <option value="">All machines</option>
+    </select>
+</label>
     <button type="submit">Show</button>
+
 </form>
 
 <hr />
@@ -34,5 +43,13 @@
         <!-- JS füllt das -->
     </tbody>
 </table>
+
+
+<h2>Time Distribution</h2>
+
+<canvas id="timeChart" width="400" height="200"></canvas>
+
+
+<script src="~/lib/chart/chart.umd.js"></script>
 
 <script src="~/js/production.js"></script>

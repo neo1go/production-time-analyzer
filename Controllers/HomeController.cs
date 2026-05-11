@@ -8,7 +8,8 @@ namespace ProductionTimeAnalyzer.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            //return View(); //die ASP.net Autostartseite wird somit umgangen
+            return RedirectToAction("Overview","Production");
         }
 
         public IActionResult Privacy()
