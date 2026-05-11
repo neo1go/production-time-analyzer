@@ -1,4 +1,38 @@
-﻿@page
-@model ProductionTimeAnalyzer.Views.Production.OverviewModel
-@{
+﻿@{
+    ViewData["Title"] = "Production Overview";
 }
+
+<h1>Production Overview</h1>
+
+<form id="filterForm">
+    <label>
+        Start Date:
+        <input type="date" id="startDate" />
+    </label>
+
+    <label>
+        End Date:
+        <input type="date" id="endDate" />
+    </label>
+
+    <button type="submit">Show</button>
+</form>
+
+<hr />
+
+<table class="table" id="timeEntriesTable">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Machine</th>
+            <th>Status</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- JS füllt das -->
+    </tbody>
+</table>
+
+<script src="~/js/production.js"></script>

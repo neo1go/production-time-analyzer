@@ -4,7 +4,7 @@ namespace ProductionTimeAnalyzer.Controllers
 {
     public class ProductionController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Overview()
         {
             return View();
         }
