@@ -10,10 +10,10 @@ namespace ProductionTimeAnalyzer.Controllers
     [Route("api/[controller]")]
     public class TimeEntriesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ProductionTimeAnalyzerContext _context;
 
         //Konstruktor
-        public TimeEntriesController(AppDbContext context)
+        public TimeEntriesController(ProductionTimeAnalyzerContext context)
         {
             _context = context;
         }

@@ -11,11 +11,11 @@ namespace ProductionTimeAnalyzer.Controllers
     [Route("api/analysis")]
     public class AnalysisController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ProductionTimeAnalyzerContext _context;
         private readonly TimeAnalysisService _analysisService;
 
         public AnalysisController(
-            AppDbContext context,
+            ProductionTimeAnalyzerContext context,
             TimeAnalysisService analysisService)
         {
             _context = context;

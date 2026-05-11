@@ -7,7 +7,7 @@ namespace ProductionTimeAnalyzer.Data
     public class SeedData
     {
 
-        public static void Initialize(AppDbContext context)
+        public static void Initialize(ProductionTimeAnalyzerContext context)
         {
             // Falls DB noch nicht existiert (Sicherheit)
             context.Database.EnsureCreated();

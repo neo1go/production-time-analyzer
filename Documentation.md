@@ -34,4 +34,21 @@
 - 'chart.umd.js' wurde von der github Seite "https://github.com/chartjs/Chart.js/releases/tag/v4.5.1" mittels tgz importiert und dann in den chart-Ordner eingefügt.
 - Der Rest von chart.js wird seperat vom Browser geladen. 
 
+- Mittels Rechtsklick auf das Projekt und dann "Neues Gerüstelement" identity hinzugefügt 
+  Account\Login\  hinzugefügt
+  Account\Register\  hinzugefügt
+  Account\Logout\  hinzugefügt
+  im nuget Packetmanager Konsole 'Add-Migration AddIdentityTables'
+  und anschließend 'Update-Database' durchgeführt
 
+### DBContext wegen login erneuern
+- AppDbContext wurde zu ProductionTimeAnalyzerContext
+  viel neue Migrations und rebuilds, damit die DB wieder sauber läuft
+
+###  Login-Seite erstellen (Terminal)
+- dotnet tool install -g dotnet-aspnet-codegenerator
+  dotnet aspnet-codegenerator identity -dc ProductionTimeAnalyzerContext
+- Dazu müssen in migrations Ordner die Datei IdentityTables gelöscht werden
+- Dann "dotnet ef migrations add IdentityTables
+"
+- Danach wieder "dotnet ef database update"

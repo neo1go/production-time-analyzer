@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ProductionTimeAnalyzer.Data;
 using ProductionTimeAnalyzer.Services;
 using System.Net.NetworkInformation;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProductionTimeAnalyzer
 {
@@ -12,9 +13,11 @@ namespace ProductionTimeAnalyzer
             var builder = WebApplication.CreateBuilder(args);
 
 
-            builder.Services.AddDbContext<AppDbContext>(options =>
+            builder.Services.AddDbContext<ProductionTimeAnalyzerContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ProductionTimeAnalyzerContext>();
 
 
 
@@ -35,8 +38,10 @@ namespace ProductionTimeAnalyzer
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapRazorPages();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
@@ -49,7 +54,7 @@ namespace ProductionTimeAnalyzer
             // using auch direkt wieder disposed.
             using (var scope = app.Services.CreateScope())
             {
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var db = scope.ServiceProvider.GetRequiredService<ProductionTimeAnalyzerContext>();
                 SeedData.Initialize(db);
             }
 

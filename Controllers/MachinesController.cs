@@ -8,9 +8,9 @@ namespace ProductionTimeAnalyzer.Controllers
     [Route("api/[controller]")]
     public class MachinesController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ProductionTimeAnalyzerContext _context;
 
-        public MachinesController(AppDbContext context)
+        public MachinesController(ProductionTimeAnalyzerContext context)
         {
             _context = context;
         }
