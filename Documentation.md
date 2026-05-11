@@ -21,3 +21,7 @@
 
 ### Security
 - HTTPS (development certificate via ASP.NET)
+
+### added (step by step)
+- Microsoft.EntityFrameworkCore
+- 
