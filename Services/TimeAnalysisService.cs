@@ -4,23 +4,33 @@ using ProductionTimeAnalyzer.Models.Enums;
 
 namespace ProductionTimeAnalyzer.Services
 {
-    /// <summary>
-    /// Performs deterministic time analysis based on TimeEntry data.
-    /// This service contains pure business logic and is AI-agnostic.
-    /// </summary>
     public class TimeAnalysisService
     {
-        public TimeAnalysisDto Analyze(IEnumerable<TimeEntry> entries)
+        public TimeAnalysisDto Analyze(
+            IEnumerable<TimeEntry> entries,
+            DateTime from,
+            DateTime to)
         {
             double productionMinutes = 0;
             double downtimeMinutes = 0;
+            double setupMinutes = 0;
+            double reworkMinutes = 0;
 
             foreach (var entry in entries)
             {
-                if (entry.EndTime <= entry.StartTime)
+                // ✅ Zeit-Überlappung korrekt clippen
+                var effectiveStart = entry.StartTime < from
+                    ? from
+                    : entry.StartTime;
+
+                var effectiveEnd = entry.EndTime > to
+                    ? to
+                    : entry.EndTime;
+
+                if (effectiveEnd <= effectiveStart)
                     continue;
 
-                var minutes = (entry.EndTime - entry.StartTime).TotalMinutes;
+                var minutes = (effectiveEnd - effectiveStart).TotalMinutes;
 
                 switch (entry.Status)
                 {
@@ -31,18 +41,35 @@ namespace ProductionTimeAnalyzer.Services
                     case TimeEntryType.Downtime:
                         downtimeMinutes += minutes;
                         break;
+
+                    case TimeEntryType.Setup:
+                        setupMinutes += minutes;
+                        break;
+
+                    case TimeEntryType.Rework:
+                        reworkMinutes += minutes;
+                        break;
                 }
             }
 
-            var total = productionMinutes + downtimeMinutes;
+            // ✅ Gesamtzeit = ALLE Zeitarten
+            var totalMinutes =
+                productionMinutes +
+                downtimeMinutes +
+                setupMinutes +
+                reworkMinutes;
 
             return new TimeAnalysisDto
             {
                 ProductionMinutes = (int)Math.Round(productionMinutes),
                 DowntimeMinutes = (int)Math.Round(downtimeMinutes),
-                DowntimePercentage = total == 0
+                SetupMinutes = (int)Math.Round(setupMinutes),
+                ReworkMinutes = (int)Math.Round(reworkMinutes),
+
+                // ✅ Prozent jetzt fachlich korrekt
+                DowntimePercentage = totalMinutes == 0
                     ? 0
-                    : downtimeMinutes / total * 100
+                    : downtimeMinutes / totalMinutes * 100
             };
         }
     }

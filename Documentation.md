@@ -53,5 +53,7 @@
   , während die App läuft.
 
 
-  ### Erstellen des KI-Agenten
-  - Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen
+### Erstellen des KI-Agenten
+- Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen
+- KI Agent eingebunden: qwen 2.5 -vl-3b-instruct mit der Größe von 3.27 GB
+- läuft in LMStudio

@@ -7,10 +7,11 @@ namespace ProductionTimeAnalyzer.Services
     public class ProductionInsightAgent
     {
         private readonly HttpClient _http;
-
-        public ProductionInsightAgent(HttpClient http)
+        private readonly IConfiguration _config;
+        public ProductionInsightAgent(HttpClient http, IConfiguration config)
         {
             _http = http;
+            _config = config;
         }
 
         public async Task<ProductionInsightResult> AnalyzeAsync(
@@ -29,7 +30,7 @@ namespace ProductionTimeAnalyzer.Services
             };
 
             var response = await _http.PostAsJsonAsync(
-                "http://localhost:1234/v1/chat/completions",
+                $"{_config["Llm:BaseUrl"]}/v1/chat/completions",
                 request);
 
             var json = await response.Content.ReadFromJsonAsync<JsonElement>();

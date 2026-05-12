@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProductionTimeAnalyzer.Data;
 using ProductionTimeAnalyzer.Dtos;
 using ProductionTimeAnalyzer.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace ProductionTimeAnalyzer.Controllers
 {
-
     [ApiController]
     [Route("api/analysis")]
     public class AnalysisController : ControllerBase
@@ -28,24 +27,30 @@ namespace ProductionTimeAnalyzer.Controllers
             DateTime? endDate,
             int? machineId)
         {
+            // ✅ Fallback-Zeitraum festlegen (wichtig!)
+            var from = startDate ?? DateTime.MinValue;
+            var to = endDate ?? DateTime.MaxValue;
+
+            if (to <= from)
+                return BadRequest("endDate must be greater than startDate.");
+
+            // ✅ Grundabfrage
             var query = _context.TimeEntries.AsQueryable();
 
-            if (startDate.HasValue)
-                query = query.Where(t => t.StartTime >= startDate.Value);
-
-            if (endDate.HasValue)
-                query = query.Where(t => t.EndTime <= endDate.Value);
+            // ✅ KORREKTE Zeit-Überlappung (nicht vollständig innerhalb!)
+            query = query.Where(t =>
+                t.StartTime < to &&
+                t.EndTime > from);
 
             if (machineId.HasValue)
                 query = query.Where(t => t.MachineId == machineId.Value);
 
             var entries = await query.ToListAsync();
 
-            // ✅ HIER der Aufruf
-            var analysis = _analysisService.Analyze(entries);
+            // ✅ Analyse mit Zeit-Clipping
+            var analysis = _analysisService.Analyze(entries, from, to);
 
             return Ok(analysis);
         }
     }
-
 }

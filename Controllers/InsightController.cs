@@ -27,15 +27,28 @@ namespace ProductionTimeAnalyzer.Controllers
         [HttpGet]
         public async Task<IActionResult> GetInsights(DateTime from, DateTime to)
         {
-            // 1️⃣ TimeEntries sauber über EF Core aus der DB holen
+            // ✅ WICHTIGE VALIDIERUNG – DAS fehlte bisher
+            if (from == default || to == default)
+            {
+                return BadRequest(
+                    "Both 'from' and 'to' query parameters must be provided.");
+            }
+
+            if (to <= from)
+            {
+                return BadRequest(
+                    "'to' must be greater than 'from'.");
+            }
+
+            // ✅ Zeit-Überlappung (korrekt)
             var entries = await _db.TimeEntries
-                .Where(e => e.StartTime >= from && e.EndTime <= to)
+                .Where(e => e.StartTime < to && e.EndTime > from)
                 .ToListAsync();
 
-            // 2️⃣ Fachliche Analyse (reine Business-Logik, KEINE KI)
-            var analysis = _analysisService.Analyze(entries);
+            // ✅ Fachliche Analyse mit Zeit-Clipping
+            var analysis = _analysisService.Analyze(entries, from, to);
 
-            // 3️⃣ DTO für den KI-Agenten bauen
+            // ✅ DTO für KI
             var input = new ProductionInsightInput
             {
                 From = from,
@@ -43,7 +56,7 @@ namespace ProductionTimeAnalyzer.Controllers
                 Analysis = analysis
             };
 
-            // 4️⃣ KI-Insight erzeugen (read-only, erklärend)
+            // ✅ KI-Analyse
             var insight = await _insightAgent.AnalyzeAsync(input);
 
             return Ok(insight);
