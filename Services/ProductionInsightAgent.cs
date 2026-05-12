@@ -1,6 +1,8 @@
 ﻿using ProductionTimeAnalyzer.AI.Prompts;
+using ProductionTimeAnalyzer.Controllers;
 using ProductionTimeAnalyzer.Dtos;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 
 namespace ProductionTimeAnalyzer.Services
 {
@@ -8,15 +10,19 @@ namespace ProductionTimeAnalyzer.Services
     {
         private readonly HttpClient _http;
         private readonly IConfiguration _config;
-        public ProductionInsightAgent(HttpClient http, IConfiguration config)
+        private readonly ILogger<ProductionInsightAgent> _logger;
+        public ProductionInsightAgent(HttpClient http, IConfiguration config, ILogger<ProductionInsightAgent> logger)
         {
             _http = http;
             _config = config;
+            _logger = logger;
         }
 
         public async Task<ProductionInsightResult> AnalyzeAsync(
             ProductionInsightInput input)
         {
+            var userMessage = BuildUserMessage(input);
+            _logger.LogInformation("=== PROMPT AN KI ===\n{UserMessage}", userMessage);
 
             var request = new
             {
@@ -48,6 +54,7 @@ namespace ProductionTimeAnalyzer.Services
 
         private static string BuildUserMessage(ProductionInsightInput input)
         {
+            var machines = string.Join("\n", input.Machines.Select(m => $"{m.MachineName}: Prod={m.Analysis.ProductionMinutes} min, Down={m.Analysis.DowntimeMinutes} min"));
             return $"""
             Analyze production performance from {input.From:d} to {input.To:d}.
 

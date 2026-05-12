@@ -48,12 +48,20 @@ namespace ProductionTimeAnalyzer.Controllers
             // ✅ Fachliche Analyse mit Zeit-Clipping
             var analysis = _analysisService.Analyze(entries, from, to);
 
+            var machines = entries
+                .GroupBy(e => e.Machine.Name)
+                .Select(g => new MachineInsightDto{
+            MachineName = g.Key,
+                    Analysis = _analysisService.Analyze(g,from, to)
+            }).ToList();
+
             // ✅ DTO für KI
             var input = new ProductionInsightInput
             {
                 From = from,
                 To = to,
-                Analysis = analysis
+                Analysis = analysis,
+                Machines = machines
             };
 
             // ✅ KI-Analyse
