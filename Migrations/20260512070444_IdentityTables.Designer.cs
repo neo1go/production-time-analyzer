@@ -12,8 +12,8 @@ using ProductionTimeAnalyzer.Data;
 namespace ProductionTimeAnalyzer.Migrations
 {
     [DbContext(typeof(ProductionTimeAnalyzerContext))]
-    [Migration("20260511175520_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20260512070444_IdentityTables")]
+    partial class IdentityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

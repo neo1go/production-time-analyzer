@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProductionTimeAnalyzer.Data;
 using ProductionTimeAnalyzer.Services;
 using System.Net.NetworkInformation;
-using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
+using System.Security;
+
+
 
 namespace ProductionTimeAnalyzer
 {
@@ -10,6 +14,10 @@ namespace ProductionTimeAnalyzer
     {
         public static void Main(string[] args)
         {
+
+          
+
+
             var builder = WebApplication.CreateBuilder(args);
 
 
@@ -26,7 +34,24 @@ namespace ProductionTimeAnalyzer
             builder.Services.AddScoped<TimeAnalysisService>();
 
 
+            builder.Services.AddScoped<ProductionInsightAgent>();
+
+            // ✅ HttpClient für den Agenten
+            builder.Services.AddHttpClient();
+
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+
             var app = builder.Build();
+
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -49,12 +74,23 @@ namespace ProductionTimeAnalyzer
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
+            
 
-            // Datenbank initialisieren, CreateScpoe erstellt AppDbContext neu und dann wird es durch 
+
+
+            // Datenbank initialisieren, CreateScpoe erstellt ProductionTimeAnalyzerContext neu und dann wird es durch 
             // using auch direkt wieder disposed.
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ProductionTimeAnalyzerContext>();
+
+
+                
+
+
+
+                db.Database.Migrate();
+
                 SeedData.Initialize(db);
             }
 

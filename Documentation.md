@@ -28,8 +28,9 @@
 - Microsoft.EntityFrameworkCore.Tools mittels nuget hinzugefügt
 - Microsoft.SqlServer hinzugefügt mittels nuget hinzugefügt
 
-- im nuget Packetmanager Konsole mittels "Add-Migration InitialCreate" die Migration erstellen für die DB
-- ebenfalls in dieser Konsole wird dann die DB von Entity Framework mittels "Update-Database" erstellt.
+- dotnet tool install --global dotnet-ef
+- dotnet ef migrations add InitialCreate
+
 
 - 'chart.umd.js' wurde von der github Seite "https://github.com/chartjs/Chart.js/releases/tag/v4.5.1" mittels tgz importiert und dann in den chart-Ordner eingefügt.
 - Der Rest von chart.js wird seperat vom Browser geladen. 
@@ -48,7 +49,9 @@
 ###  Login-Seite erstellen (Terminal)
 - dotnet tool install -g dotnet-aspnet-codegenerator
   dotnet aspnet-codegenerator identity -dc ProductionTimeAnalyzerContext
-- Dazu müssen in migrations Ordner die Datei IdentityTables gelöscht werden
-- Dann "dotnet ef migrations add IdentityTables
-"
-- Danach wieder "dotnet ef database update"
+- ACHTUNG, erst hiermit registrieren:  https://localhost:7294/Identity/Account/Register
+  , während die App läuft.
+
+
+  ### Erstellen des KI-Agenten
+  - Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen

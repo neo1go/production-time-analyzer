@@ -2,42 +2,47 @@
 using ProductionTimeAnalyzer.Models;
 using ProductionTimeAnalyzer.Models.Enums;
 
-
 namespace ProductionTimeAnalyzer.Services
 {
+    /// <summary>
+    /// Performs deterministic time analysis based on TimeEntry data.
+    /// This service contains pure business logic and is AI-agnostic.
+    /// </summary>
     public class TimeAnalysisService
     {
-        // dies dient der Berechnung der Zeiten, also reine Fachlogik
-
         public TimeAnalysisDto Analyze(IEnumerable<TimeEntry> entries)
         {
-
-            var productionMinutes = 0;
-            var downtimeMinutes = 0;
+            double productionMinutes = 0;
+            double downtimeMinutes = 0;
 
             foreach (var entry in entries)
             {
                 if (entry.EndTime <= entry.StartTime)
                     continue;
 
-                var minutes = (int)(entry.EndTime - entry.StartTime).TotalMinutes;
+                var minutes = (entry.EndTime - entry.StartTime).TotalMinutes;
+
                 switch (entry.Status)
                 {
                     case TimeEntryType.Production:
                         productionMinutes += minutes;
                         break;
+
                     case TimeEntryType.Downtime:
                         downtimeMinutes += minutes;
                         break;
                 }
             }
+
             var total = productionMinutes + downtimeMinutes;
 
             return new TimeAnalysisDto
             {
-                ProductionMinutes = productionMinutes,
-                DowntimeMinutes = downtimeMinutes,
-                DowntimePercentage = total == 0 ? 0 : (double)downtimeMinutes / total * 100
+                ProductionMinutes = (int)Math.Round(productionMinutes),
+                DowntimeMinutes = (int)Math.Round(downtimeMinutes),
+                DowntimePercentage = total == 0
+                    ? 0
+                    : downtimeMinutes / total * 100
             };
         }
     }

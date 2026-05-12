@@ -1,6 +1,6 @@
 ﻿namespace ProductionTimeAnalyzer.Services
 {
-    public class AgentService
+    public class ProductionAnalyticsService
     {
     }
 }

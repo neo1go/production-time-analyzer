@@ -122,7 +122,7 @@ function renderChart(entries) {
         totals.rework
     ];
 
-    // ✅ HIER DER ENTSCHEIDENDE FIX
+    
     if (chartInstance) {
         chartInstance.destroy();
         chartInstance = null;
