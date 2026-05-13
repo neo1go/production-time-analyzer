@@ -12,12 +12,12 @@ The goal is not employee time tracking, but transparent production time analysis
 
 ## Features
 - Capture and manage production time entries
-- Filter by time range, product, and machine
+- Filter by time  and machine
 - Display data in tables and charts
 - Analyze time segments (setup, production, downtime, rework)
 - Interactive frontend using JavaScript (fetch API)
 - Optional analysis service to explain anomalies
-
+- AI Agent for analysis purpose only
 ---
 
 ## Technology Stack
@@ -69,7 +69,7 @@ The application follows a layered architecture within a single ASP.NET Core proj
 3. The user selects:
    - Start date
    - End date
-   - Optional: machine or product
+   - Optional: machine
 4. The user clicks **"Show"**
 5. The system displays:
    - A table of time entries
@@ -100,7 +100,7 @@ The analysis component is:
 
 ## Data Storage
 
-- SQL Server (LocalDB or Express)
+- SQL Server (LocalDB)
 - Managed using Entity Framework Core
 - Real database (no mocks or simulations)
 

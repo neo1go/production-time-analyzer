@@ -1,60 +1,148 @@
+# Production Time Analyzer
+
 ## Technologies Used (Current State)
 
 ### Backend
-- ASP.NET Core MVC (Web Application Framework)
-- C# (Programming Language)
+- **ASP.NET Core MVC** – Web application framework
+- **C#** – Primary programming language
 
 ### Frontend
-- Razor Views (Server-side rendering)
-- JavaScript (fetch API for asynchronous requests)
+- **Razor Views** – Server-side rendered UI
+- **JavaScript** – Asynchronous data loading via Fetch API
+- **Chart.js (v4.5.1)** – Data visualization (production time distribution and analysis charts)
 
 ### Data Access
-- Entity Framework Core (ORM)
+- **Entity Framework Core** – Object–relational mapper (ORM)
 
 ### Database
-- SQL Server (LocalDB for development)
+- **SQL Server (LocalDB)** – Development database
 
-### Development & Version Control
-- Visual Studio
-- Git
-- GitHub
-- Swagger
+### Authentication & Security
+- **ASP.NET Core Identity** – User authentication and authorization
+- **HTTPS** – Development certificate provided by ASP.NET Core
 
-### Security
-- HTTPS (development certificate via ASP.NET)
+### Tooling & Development
+- **Visual Studio**
+- **.NET CLI**
+- **Git**
+- **GitHub**
+- **Swagger (Swashbuckle)** – API inspection and testing
 
-### added (step by step)
-- Microsoft.EntityFrameworkCore mittels nuget hinzugefügt
-- Microsoft.EntityFrameworkCore.Design mittels nuget hinzugefügt
-- Microsoft.EntityFrameworkCore.Tools mittels nuget hinzugefügt
-- Microsoft.SqlServer hinzugefügt mittels nuget hinzugefügt
+---
 
-- dotnet tool install --global dotnet-ef
-- dotnet ef migrations add InitialCreate
+## AI Integration
+
+- **Local LLM inference using LM Studio**
+- **Model:** `qwen2.5-vl-3b-instruct` (~3.27 GB)
+- **Communication:** HTTP API
+- **Purpose of AI usage:**
+  - Contextual explanation of aggregated production metrics
+  - Highlighting of anomalies and unusual patterns
+  - Qualitative interpretation of calculated KPIs
+- **Important:**  
+  The AI is **read-only** and **does not perform any calculations**.  
+  All metrics are deterministically calculated in the backend before being passed to the AI.
+
+---
+
+## Development & Setup Notes
+
+### Entity Framework Core
+
+The following NuGet packages were added step by step:
+
+- `Microsoft.EntityFrameworkCore`
+- `Microsoft.EntityFrameworkCore.Design`
+- `Microsoft.EntityFrameworkCore.Tools`
+- `Microsoft.Data.SqlClient`
+
+Entity Framework CLI installation:
+
+bash
+dotnet tool install --global dotnet-ef
 
 
-- 'chart.umd.js' wurde von der github Seite "https://github.com/chartjs/Chart.js/releases/tag/v4.5.1" mittels tgz importiert und dann in den chart-Ordner eingefügt.
-- Der Rest von chart.js wird seperat vom Browser geladen. 
+### Initial migration and database setup:
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 
-- Mittels Rechtsklick auf das Projekt und dann "Neues Gerüstelement" identity hinzugefügt 
-  Account\Login\  hinzugefügt
-  Account\Register\  hinzugefügt
-  Account\Logout\  hinzugefügt
-  im nuget Packetmanager Konsole 'Add-Migration AddIdentityTables'
-  und anschließend 'Update-Database' durchgeführt
+### Identity Setup:
+ASP.NET Core Identity scaffolding added via Visual Studio
+(Rechtsklick → Neues Gerüstelement)
+Generated Identity pages:
 
-### DBContext wegen login erneuern
-- AppDbContext wurde zu ProductionTimeAnalyzerContext
-  viele neue Migrations und rebuilds, damit die DB wieder sauber läuft
-
-###  Login-Seite erstellen (Terminal)
-- dotnet tool install -g dotnet-aspnet-codegenerator
-  dotnet aspnet-codegenerator identity -dc ProductionTimeAnalyzerContext
-- ACHTUNG, erst hiermit registrieren:  https://localhost:7294/Identity/Account/Register
-  , während die App läuft.(oder auf 'Register Account' klicken)
+Account/Login
+Account/Register
+Account/Logout
 
 
-### Erstellen des KI-Agenten
-- Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen.
-- KI Agent eingebunden: qwen 2.5 -vl-3b-instruct mit der Größe von 3.27 GB
-- Lokaler Server von LMStudio muß laufen mit eingebundenem Model.
+Identity database integration:
+
+# Initial migration in pm:
+Add-Migration AddIdentityTables
+# Database update in pm:
+Update-Database
+
+### Important
+User registration is available at:
+https://localhost:7294/Identity/Account/Register
+or via click on 'Register account'
+(The application must be running)
+
+### DbContext Refactoring
+
+AppDbContext was renamed to ProductionTimeAnalyzerContext
+Multiple migrations and rebuilds were required to ensure a clean and consistent database state after Identity integration
+
+
+### Chart.js Integration
+
+chart.umd.js was downloaded from the official Chart.js GitHub release page:
+https://github.com/chartjs/Chart.js/releases/tag/v4.5.1
+The file was imported manually via the .tgz archive and placed into a local chart directory
+Additional Chart.js resources are loaded via the browser where required
+
+
+### Application Overview
+
+Main dashboard route:
+/Production/Overview
+
+## Features:
+
+Time-based filtering (date range)
+Machine-specific filtering
+Tabular display of time entries
+Production time distribution chart
+Production vs. downtime analysis chart
+Optional AI-generated insights based on aggregated metrics
+
+
+
+
+## Notes on AI Behavior
+
+The AI is explicitly instructed:
+
+Not to infer or guess time periods
+Not to calculate metrics
+Not to reinterpret downtime as an error condition
+
+
+UnclassifiedMinutes are treated as a diagnostic indicator, not a primary KPI, and are only mentioned when relevant
+
+
+## Version Control
+
+Git is used for version control
+GitHub hosts the repository
+Local configuration files (e.g. appsettings.Development.json) are excluded via .gitignore
+
+
+### Status
+The project is under active development and focuses on:
+
+Clean separation of concerns
+Deterministic backend calculations
+Transparent AI-assisted interpretation
+Maintainable MVC architecture
