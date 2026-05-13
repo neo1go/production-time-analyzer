@@ -23,7 +23,7 @@ The goal is not employee time tracking, but transparent production time analysis
 ## Technology Stack
 - **ASP.NET Core MVC**
 - **Entity Framework Core**
-- **SQL Server (LocalDB or Express)**
+- **SQL Server (LocalDB)**
 - **Razor Views (HTML)**
 - **JavaScript (fetch, Chart.js)**
 
