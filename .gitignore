@@ -7,5 +7,5 @@ obj/
 *.dll
 *.log
 logs/
-/Entwurf.md
-/Projektstruktur.txt
+Entwurf.md
+Projektstruktur.txt
