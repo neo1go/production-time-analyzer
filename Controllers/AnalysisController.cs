@@ -23,15 +23,15 @@ namespace ProductionTimeAnalyzer.Controllers
 
         [HttpGet]
         public async Task<ActionResult<TimeAnalysisDto>> GetAnalysis(
-            DateTime? startDate,
-            DateTime? endDate,
+            DateTime? from,
+            DateTime? to,
             int? machineId)
         {
             // ✅ Fallback-Zeitraum festlegen (wichtig!)
-            var from = startDate ?? DateTime.MinValue;
-            var to = endDate ?? DateTime.MaxValue;
+            var effectiveFrom = from.Value.Date;
+            var effectiveTo = to.Value.Date.AddDays(1);
 
-            if (to <= from)
+            if (effectiveTo <= effectiveFrom)
                 return BadRequest("endDate must be greater than startDate.");
 
             // ✅ Grundabfrage
@@ -39,8 +39,8 @@ namespace ProductionTimeAnalyzer.Controllers
 
             // ✅ KORREKTE Zeit-Überlappung (nicht vollständig innerhalb!)
             query = query.Where(t =>
-                t.StartTime < to &&
-                t.EndTime > from);
+                t.StartTime < effectiveTo &&
+                t.EndTime > effectiveFrom);
 
             if (machineId.HasValue)
                 query = query.Where(t => t.MachineId == machineId.Value);
@@ -48,7 +48,7 @@ namespace ProductionTimeAnalyzer.Controllers
             var entries = await query.ToListAsync();
 
             // ✅ Analyse mit Zeit-Clipping
-            var analysis = _analysisService.Analyze(entries, from, to);
+            var analysis = _analysisService.Analyze(entries, effectiveFrom, effectiveTo);
 
             return Ok(analysis);
         }

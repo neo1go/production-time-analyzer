@@ -15,6 +15,7 @@ namespace ProductionTimeAnalyzer.Services
             double downtimeMinutes = 0;
             double setupMinutes = 0;
             double reworkMinutes = 0;
+            double unclassifiedMinutes = 0;
 
             foreach (var entry in entries)
             {
@@ -49,6 +50,10 @@ namespace ProductionTimeAnalyzer.Services
                     case TimeEntryType.Rework:
                         reworkMinutes += minutes;
                         break;
+
+                    default:
+                        unclassifiedMinutes += minutes;
+                        break;
                 }
             }
 
@@ -57,7 +62,8 @@ namespace ProductionTimeAnalyzer.Services
                 productionMinutes +
                 downtimeMinutes +
                 setupMinutes +
-                reworkMinutes;
+                reworkMinutes +
+                unclassifiedMinutes;
 
             return new TimeAnalysisDto
             {
@@ -65,6 +71,7 @@ namespace ProductionTimeAnalyzer.Services
                 DowntimeMinutes = (int)Math.Round(downtimeMinutes),
                 SetupMinutes = (int)Math.Round(setupMinutes),
                 ReworkMinutes = (int)Math.Round(reworkMinutes),
+                UnclassifiedMinutes = (int)Math.Round(unclassifiedMinutes),  // sollten faktisch 0 sein
 
                 // ✅ Prozent jetzt fachlich korrekt
                 DowntimePercentage = totalMinutes == 0

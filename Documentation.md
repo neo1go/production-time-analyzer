@@ -18,6 +18,7 @@
 - Visual Studio
 - Git
 - GitHub
+- Swagger
 
 ### Security
 - HTTPS (development certificate via ASP.NET)
@@ -44,16 +45,16 @@
 
 ### DBContext wegen login erneuern
 - AppDbContext wurde zu ProductionTimeAnalyzerContext
-  viel neue Migrations und rebuilds, damit die DB wieder sauber läuft
+  viele neue Migrations und rebuilds, damit die DB wieder sauber läuft
 
 ###  Login-Seite erstellen (Terminal)
 - dotnet tool install -g dotnet-aspnet-codegenerator
   dotnet aspnet-codegenerator identity -dc ProductionTimeAnalyzerContext
 - ACHTUNG, erst hiermit registrieren:  https://localhost:7294/Identity/Account/Register
-  , während die App läuft.
+  , während die App läuft.(oder auf 'Register Account' klicken)
 
 
 ### Erstellen des KI-Agenten
-- Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen
+- Swashbuckle sowie Swashbuckle Swagger installiert, um die json-Ausgabe des Agenten zu überprüfen.
 - KI Agent eingebunden: qwen 2.5 -vl-3b-instruct mit der Größe von 3.27 GB
-- läuft in LMStudio
+- Lokaler Server von LMStudio muß laufen mit eingebundenem Model.

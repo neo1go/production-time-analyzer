@@ -4,6 +4,7 @@ using ProductionTimeAnalyzer.Dtos;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
+// KI Agent Verbindung
 namespace ProductionTimeAnalyzer.Services
 {
     public class ProductionInsightAgent
@@ -61,6 +62,7 @@ namespace ProductionTimeAnalyzer.Services
             Production minutes: {input.Analysis.ProductionMinutes}
             Downtime minutes: {input.Analysis.DowntimeMinutes}
             Downtime percentage: {input.Analysis.DowntimePercentage:F1}%
+            UclassifiedMinutes: {input.Analysis.UnclassifiedMinutes}
             """;
         }
 

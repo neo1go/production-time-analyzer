@@ -13,6 +13,8 @@
         public int SetupMinutes { get; set; }
         public int ReworkMinutes { get; set; }
 
+        public int UnclassifiedMinutes { get; set; }
+
         // ✅ Kennzahl auf Basis ALLER Zeitarten
         public double DowntimePercentage { get; set; }
     }

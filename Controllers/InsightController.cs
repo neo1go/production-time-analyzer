@@ -25,9 +25,11 @@ namespace ProductionTimeAnalyzer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetInsights(DateTime from, DateTime to)
+        public async Task<IActionResult> GetInsights(
+            DateTime from,
+            DateTime to,
+            int? machineId)
         {
-            // ✅ WICHTIGE VALIDIERUNG – DAS fehlte bisher
             if (from == default || to == default)
             {
                 return BadRequest(
@@ -40,27 +42,49 @@ namespace ProductionTimeAnalyzer.Controllers
                     "'to' must be greater than 'from'.");
             }
 
-            // ✅ Zeit-Überlappung (korrekt)
-            var entries = await _db.TimeEntries
-                .Where(e => e.StartTime < to && e.EndTime > from)
-                .ToListAsync();
+            // ✅ Zeitraum normalisieren
+            var effectiveFrom = from.Date;
+            var effectiveTo = to.Date.AddDays(1);
 
-            // ✅ Fachliche Analyse mit Zeit-Clipping
-            var analysis = _analysisService.Analyze(entries, from, to);
+            // ✅ Basis-Query
+            var query = _db.TimeEntries
+                .Include(e => e.Machine)
+                .Where(e => e.StartTime < effectiveTo &&
+                            e.EndTime > effectiveFrom);
 
-            var machines = entries
-                .GroupBy(e => e.Machine.Name)
-                .Select(g => new MachineInsightDto{
-            MachineName = g.Key,
-                    Analysis = _analysisService.Analyze(g,from, to)
-            }).ToList();
+            // ✅ Maschinenfilter (DER entscheidende Punkt)
+            if (machineId.HasValue)
+            {
+                query = query.Where(e => e.MachineId == machineId.Value);
+            }
+
+            var entries = await query.ToListAsync();
+
+            // ✅ Gesamtauswertung (jetzt korrekt gefiltert)
+            var overallAnalysis =
+                _analysisService.Analyze(entries, effectiveFrom, effectiveTo);
+
+            // ✅ Pro Maschine (nur relevant bei Gesamtansicht)
+            var machines = machineId.HasValue
+                ? new List<MachineInsightDto>()   // bewusst leer
+                : entries
+                    .GroupBy(e => e.Machine)
+                    .Select(g => new MachineInsightDto
+                    {
+                        MachineName = g.Key?.Name ?? "(unknown)",
+                        Analysis = _analysisService.Analyze(
+                            g,
+                            effectiveFrom,
+                            effectiveTo)
+                    })
+                    .ToList();
 
             // ✅ DTO für KI
             var input = new ProductionInsightInput
             {
-                From = from,
-                To = to,
-                Analysis = analysis,
+                From = effectiveFrom,
+                To = effectiveTo,
+                Analysis = overallAnalysis,
                 Machines = machines
             };
 

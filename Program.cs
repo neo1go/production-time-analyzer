@@ -84,11 +84,6 @@ namespace ProductionTimeAnalyzer
             {
                 var db = scope.ServiceProvider.GetRequiredService<ProductionTimeAnalyzerContext>();
 
-
-                
-
-
-
                 db.Database.Migrate();
 
                 SeedData.Initialize(db);
