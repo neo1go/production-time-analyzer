@@ -18,31 +18,71 @@ namespace ProductionTimeAnalyzer.Services
             _config = config;
             _logger = logger;
         }
+        // Dies ist der LMStudio Task 
+        /*
+              public async Task<ProductionInsightResult> AnalyzeAsync(
+                  ProductionInsightInput input)
+              {
+                  var userMessage = BuildUserMessage(input);
+                  _logger.LogInformation("=== PROMPT AN KI ===\n{UserMessage}", userMessage);
 
+                  var request = new
+                  {
+                      model = "qwen2.5-3b-instruct",
+                      messages = new[]
+                              {
+                      new { role = "system", content = ProductionInsightPrompt.System },
+                      new { role = "user", content = BuildUserMessage(input) }
+                  },
+                      temperature = 0.3
+                  };
+
+                  var response = await _http.PostAsJsonAsync(
+                      $"{_config["Llm:BaseUrl"]}/v1/chat/completions",
+                      request);
+
+                  var json = await response.Content.ReadFromJsonAsync<JsonElement>();
+                  var text = json
+                      .GetProperty("choices")[0]
+                      .GetProperty("message")
+                      .GetProperty("content")
+                      .GetString();
+
+                  return new ProductionInsightResult
+                  {
+                      Text = text ?? ""
+                  };
+              }
+              */
+
+        // dies ist der Ollama Task
         public async Task<ProductionInsightResult> AnalyzeAsync(
-            ProductionInsightInput input)
+    ProductionInsightInput input)
         {
             var userMessage = BuildUserMessage(input);
             _logger.LogInformation("=== PROMPT AN KI ===\n{UserMessage}", userMessage);
 
             var request = new
             {
-                model = "qwen2.5-3b-instruct",
+                model = "gemma3n:e2b ",   // Ollama-Modellname
                 messages = new[]
-                        {
-                new { role = "system", content = ProductionInsightPrompt.System },
-                new { role = "user", content = BuildUserMessage(input) }
-            },
-                temperature = 0.3
+                {
+            new { role = "system", content = ProductionInsightPrompt.System },
+            new { role = "user", content = userMessage }
+        },
+                stream = false,                  // wichtig: sonst erhält man Streaming-Chunks,also stückweise Antwort.
+                options = new
+                {
+                    temperature = 0.3
+                }
             };
 
             var response = await _http.PostAsJsonAsync(
-                $"{_config["Llm:BaseUrl"]}/v1/chat/completions",
+                $"{_config["Llm:BaseUrl"]}/api/chat",
                 request);
 
             var json = await response.Content.ReadFromJsonAsync<JsonElement>();
             var text = json
-                .GetProperty("choices")[0]
                 .GetProperty("message")
                 .GetProperty("content")
                 .GetString();
@@ -52,6 +92,7 @@ namespace ProductionTimeAnalyzer.Services
                 Text = text ?? ""
             };
         }
+
 
         private static string BuildUserMessage(ProductionInsightInput input)
         {
