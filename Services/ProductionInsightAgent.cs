@@ -59,6 +59,7 @@ namespace ProductionTimeAnalyzer.Services
         public async Task<ProductionInsightResult> AnalyzeAsync(
     ProductionInsightInput input)
         {
+
             var userMessage = BuildUserMessage(input);
             _logger.LogInformation("=== PROMPT AN KI ===\n{UserMessage}", userMessage);
 
