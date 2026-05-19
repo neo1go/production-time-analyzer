@@ -91,16 +91,16 @@ or via click on 'Register account'
 
 ### DbContext Refactoring
 
-AppDbContext was renamed to ProductionTimeAnalyzerContext
-Multiple migrations and rebuilds were required to ensure a clean and consistent database state after Identity integration
+AppDbContext was renamed to ProductionTimeAnalyzerContext.
+Multiple migrations and rebuilds were required to ensure a clean and consistent database state after Identity integration.
 
 
 ### Chart.js Integration
 
 chart.umd.js was downloaded from the official Chart.js GitHub release page:
 https://github.com/chartjs/Chart.js/releases/tag/v4.5.1
-The file 'chart.umd.js 'was implemented manually via the .tgz archive and placed into a local chart directory
-Additional Chart.js resources are loaded via the browser where required
+The file 'chart.umd.js 'was implemented manually via the .tgz archive and placed into a local chart directory.
+Additional Chart.js resources are loaded via the browser where required.
 
 
 ## Testing Strategy
