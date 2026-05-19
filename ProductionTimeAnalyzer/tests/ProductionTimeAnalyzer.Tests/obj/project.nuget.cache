@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RNj2fz/0UiI=",
+  "dgSpecHash": "hFjM5ozD7KU=",
   "success": true,
-  "projectFilePath": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
+  "projectFilePath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gordon H\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Gordon H\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

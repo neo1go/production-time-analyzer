@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj": {}
+    "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj": {}
   },
   "projects": {
-    "C:\\src\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj": {
+    "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\src\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj",
+        "projectUniqueName": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj",
         "projectName": "ProductionTimeAnalyzer",
-        "projectPath": "C:\\src\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj",
+        "projectPath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj",
         "packagesPath": "C:\\Users\\Gordon H\\.nuget\\packages\\",
-        "outputPath": "C:\\src\\ProductionTimeAnalyzer\\src\\obj\\",
+        "outputPath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -535,14 +535,14 @@
         }
       }
     },
-    "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj": {
+    "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
+        "projectUniqueName": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
         "projectName": "ProductionTimeAnalyzer.Tests",
-        "projectPath": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
+        "projectPath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
         "packagesPath": "C:\\Users\\Gordon H\\.nuget\\packages\\",
-        "outputPath": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\obj\\",
+        "outputPath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -565,8 +565,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "C:\\src\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj": {
-                "projectPath": "C:\\src\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj"
+              "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj": {
+                "projectPath": "C:\\ProductionTimeAnalyzer\\ProductionTimeAnalyzer\\src\\ProductionTimeAnalyzer.csproj"
               }
             }
           }
