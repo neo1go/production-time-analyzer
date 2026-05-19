@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProductionTimeAnalyzer.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+564b361dce9796f2a8e624e8d2e7d7ab9299321b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88aff876cd32e81d1a1e2a10c6f5c5eeafeb661d")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProductionTimeAnalyzer.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProductionTimeAnalyzer.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

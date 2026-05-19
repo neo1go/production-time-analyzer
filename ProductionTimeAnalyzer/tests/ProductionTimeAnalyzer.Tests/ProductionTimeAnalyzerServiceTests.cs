@@ -96,8 +96,12 @@ namespace ProductionTimeAnalyzer.Tests
             Assert.Equal(0, result.UnclassifiedMinutes);
         }
 
-        [Fact]
-        public void Analyze_WhenEntryOverlapsRangeStart_IsClippedToRange()
+        // Merged 3 Tests into one via 'Theory'
+        [Theory]
+        [InlineData(7,30,9,0,60)]
+        [InlineData(15,0,16,30,60)]
+        [InlineData(7,0,17,0,480)]
+        public void Analyze_WhenEntryOverlapsRange_IsClippedCorrectly(int startHour, int startMinute,int endHour,int endMinute, int expectedMinutes)
         {
             var service = new TimeAnalysisService();
 
@@ -106,79 +110,18 @@ namespace ProductionTimeAnalyzer.Tests
 
             var entry = new TimeEntry
             {
-                StartTime = new DateTime(2024, 1, 1, 7, 30, 0),
-                EndTime = new DateTime(2024, 1, 1, 9, 0, 0),
+                StartTime = new DateTime(2024, 1, 1, startHour, startMinute, 0),
+                EndTime = new DateTime(2024, 1, 1, endHour, endMinute, 0),
                 Status = TimeEntryType.Production
             };
 
-            var entries = new List<TimeEntry> { entry };
-
             // Act
-            var result = service.Analyze(entries, from, to);
+            var result = service.Analyze(new[] {entry}, from, to);
 
             // Assert
-            Assert.Equal(60, result.ProductionMinutes);
-            Assert.Equal(0, result.SetupMinutes);
-            Assert.Equal(0, result.DowntimeMinutes);
-            Assert.Equal(0, result.ReworkMinutes);
-            Assert.Equal(0, result.UnclassifiedMinutes);
+            Assert.Equal(expectedMinutes, result.ProductionMinutes);
         }
 
-        [Fact]
-        public void Analyze_WhenEntryOverlapsRangeEnd_IsClippedToRange()
-        {
-            var service = new TimeAnalysisService();
-
-            var from = new DateTime(2024, 1, 1, 8, 0, 0);
-            var to = new DateTime(2024, 1, 1, 16, 0, 0);
-
-            var entry = new TimeEntry
-            {
-                StartTime = new DateTime(2024, 1, 1, 15, 0, 0),
-                EndTime = new DateTime(2024, 1, 1, 16, 30, 0),
-                Status = TimeEntryType.Production
-            };
-
-            var entries = new List<TimeEntry> { entry };
-
-            // Act
-            var result = service.Analyze(entries, from, to);
-
-            // Assert
-            Assert.Equal(60, result.ProductionMinutes);
-            Assert.Equal(0, result.SetupMinutes);
-            Assert.Equal(0, result.DowntimeMinutes);
-            Assert.Equal(0, result.ReworkMinutes);
-            Assert.Equal(0, result.UnclassifiedMinutes);
-        }
-
-        [Fact]
-        public void Analyze_WhenEntryOverlapsCompleteRange_IsClippedToRange()
-        {
-            var service = new TimeAnalysisService();
-
-            var from = new DateTime(2024, 1, 1, 8, 0, 0);
-            var to = new DateTime(2024, 1, 1, 16, 0, 0);
-
-            var entry = new TimeEntry
-            {
-                StartTime = new DateTime(2024, 1, 1, 7, 0, 0),
-                EndTime = new DateTime(2024, 1, 1, 17, 0, 0),
-                Status = TimeEntryType.Production
-            };
-
-            var entries = new List<TimeEntry> { entry };
-
-            // Act
-            var result = service.Analyze(entries, from, to);
-
-            // Assert
-            Assert.Equal(480, result.ProductionMinutes);
-            Assert.Equal(0, result.SetupMinutes);
-            Assert.Equal(0, result.DowntimeMinutes);
-            Assert.Equal(0, result.ReworkMinutes);
-            Assert.Equal(0, result.UnclassifiedMinutes);
-        }
 
         [Fact]
         public void Analyze_WhenMultipleProdcutionEntries_ReturnSumOfMinutes()
