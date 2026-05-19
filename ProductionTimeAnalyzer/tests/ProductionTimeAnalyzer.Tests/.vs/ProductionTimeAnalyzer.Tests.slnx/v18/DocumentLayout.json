@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FD94ED8B-A38B-CFC6-9B2A-3777127048F6}|ProductionTimeAnalyzer.Tests.csproj|c:\\src\\productiontimeanalyzer\\tests\\productiontimeanalyzer.tests\\productiontimeanalyzer.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{FD94ED8B-A38B-CFC6-9B2A-3777127048F6}|ProductionTimeAnalyzer.Tests.csproj|solutionrelative:productiontimeanalyzer.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductionTimeAnalyzer.Tests.csproj",
+              "DocumentMoniker": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
+              "RelativeDocumentMoniker": "ProductionTimeAnalyzer.Tests.csproj",
+              "ToolTip": "C:\\src\\ProductionTimeAnalyzer\\tests\\ProductionTimeAnalyzer.Tests\\ProductionTimeAnalyzer.Tests.csproj",
+              "RelativeToolTip": "ProductionTimeAnalyzer.Tests.csproj",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-19T06:05:51.597Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

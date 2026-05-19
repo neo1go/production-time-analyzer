@@ -1,6 +1,0 @@
-<Solution>
-  <Folder Name="/Projektmappenelemente/">
-    <File Path=".gitignore" />
-  </Folder>
-  <Project Path="ProductionTimeAnalyzer.csproj" />
-</Solution>

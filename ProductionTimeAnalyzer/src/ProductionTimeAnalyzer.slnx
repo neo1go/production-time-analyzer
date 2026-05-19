@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Projektmappenelemente/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="../tests/ProductionTimeAnalyzer.Tests/ProductionTimeAnalyzer.Tests.csproj" />
+  <Project Path="ProductionTimeAnalyzer.csproj" />
+</Solution>
