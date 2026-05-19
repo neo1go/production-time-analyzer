@@ -149,6 +149,15 @@ GitHub hosts the repository
 Local configuration files (e.g. appsettings.Development.json) are excluded via .gitignore
 
 
+
+## Development Notes
+
+This repository reflects an iterative development process.
+Commit messages are intentionally granular to show problem solving,
+debugging steps, and structural decisions made during development.
+
+
+
 ### Status
 The project is under active development and focuses on:
 

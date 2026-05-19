@@ -119,6 +119,13 @@ Instead, it demonstrates:
 
 ---
 
+## Documentation
+
+For a more detailed technical and architectural description,
+see [Documentation.md](Documentation.md).
+
+---
+
 ## Author
 
 This project was developed as part of a learning and portfolio effort to demonstrate 
